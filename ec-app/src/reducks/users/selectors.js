@@ -8,6 +8,12 @@ export const getIsSignedIn = createSelector(
 
 )
 
+export const getProductsInCart = createSelector(
+    [usersSelector],
+    state => state.cart
+
+)
+
 
 export const getUserid = createSelector(
     [usersSelector],
