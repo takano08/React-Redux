@@ -1,12 +1,12 @@
 import React from 'react';
-import {getUserid, getUsername} from "../reducks/users/selectors";
+import {getUserId, getUsername} from "../reducks/users/selectors";
 import {useDispatch, useSelector} from "react-redux";
 import {signOut} from "../reducks/users/operations";
 
 const Home = () => {
     const dispatch = useDispatch()
     const selector = useSelector(state => state);
-    const uid = getUserid(selector)
+    const uid = getUserId(selector)
     const username = getUsername(selector)
     return(
         <div>
