@@ -1,11 +1,12 @@
-import React, { useMemo} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {getProductsInCart} from "../reducks/users/selectors";
 import {makeStyles} from "@material-ui/core/styles";
 import {CartListItem} from "../components/Products";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
-import {TextDetail} from "../components/UIkit";
+import {PrimaryButton, TextDetail} from "../components/UIkit";
+import {orderProduct} from "../reducks/products/operations";
 
 const useStyles = makeStyles((theme) => ({
     detailBox: {
@@ -30,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
 
 const OrderConfirm = () => {
     const classes = useStyles();
+    const dispatch = useDispatch();
     const selector = useSelector(state => state);
     const productsInCart = getProductsInCart(selector);
 
@@ -42,6 +44,10 @@ const OrderConfirm = () => {
     const tax =  (subtotal) * 0.1;
 
     const total = subtotal + shippingFee + tax;
+
+    const order = useCallback(() => {
+        dispatch(orderProduct(productsInCart, total))
+    },[productsInCart, total])
 
     return(
         <section className="c-section-wrapin">
@@ -61,6 +67,7 @@ const OrderConfirm = () => {
                     <Divider/>
                     <div className="module-spacer--extra-extra-small"/>
                     <TextDetail label={"合計(税込)"} value={"¥" + total.toLocaleString()}/>
+                    <PrimaryButton label={"注文を確定する"} onClick={order}/>
                 </div>
             </div>
         </section>
