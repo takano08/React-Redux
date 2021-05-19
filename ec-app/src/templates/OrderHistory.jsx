@@ -21,12 +21,21 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const OrderHistory = () => {
-    const classes = useStyles()
+    const classes = useStyles();
+    const dispatch = useDispatch();
+    const selector = useSelector((state)  => state);
+    const orders = getOrdersHistory(selector);
+
+    useEffect(() => {
+        dispatch(fetchOrdersHistory())
+    },[])
 
     return (
         <section className="c-section-wrapin">
             <List className={classes.orderList}>
-
+                {orders.length > 0 && (
+                    orders.map(order => <OrderHistoryItem order={order} key={order.id} />)
+                )}
             </List>
         </section>
     )
