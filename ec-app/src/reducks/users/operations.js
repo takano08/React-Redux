@@ -12,6 +12,13 @@ export const addProductToCart = (addedProduct) => {
     }
 }
 
+export const fetchOrdersHistory = () => {
+    return async (dispatch, getState) => {
+        const uid = getState().users.uid;
+
+    }
+}
+
 export const fetchProductsInCart = (products) => {
     return async (dispatch) => {
         dispatch(fetchProductsInCartAction(products))
