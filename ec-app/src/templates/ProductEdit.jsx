@@ -18,6 +18,7 @@ const ProductEdit = () => {
         [description, setDescription] = useState(""),
         [images, setImages] = useState([]),
         [category, setCategory] = useState(""),
+        [categories, setCategories] = useState([]),
         [gender, setGender] = useState(""),
         [price, setPrice] = useState(""),
         [sizes, setSizes] = useState([]);
@@ -47,13 +48,22 @@ const ProductEdit = () => {
                 setSizes(product.sizes)
             })
         }
-    },[id])
+    },[id]);
 
-    const categories = [
-        {id: "tops",name:"トップス"},
-        {id: "shirts",name:"シャツ"},
-        {id: "pants",name:"パンツ"},
-    ]
+    useEffect(() => {
+        db.collection('categories').orderBy("order", "asc").get().then(snapshots => {
+            const list = []
+            snapshots.forEach(snapshot => {
+                const data = snapshot.data()
+                list.push({
+                    id: data.id,
+                    name: data.name
+                })
+            })
+            setCategories(list)
+        });
+    },[]);
+
 
     const genders = [
         {id: "all",name:"全て"},
